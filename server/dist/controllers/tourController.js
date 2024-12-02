@@ -1,4 +1,3 @@
-import z from "zod";
 import Tour from "../models/Tours.js";
 import { ToursZodSchema } from "../types/index.js";
 export const createTour = async (req, res) => {
@@ -20,7 +19,7 @@ export const createTour = async (req, res) => {
 };
 export const updateTourById = async (req, res) => {
     try {
-        const id = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
         const updatedTour = ToursZodSchema.parse(req.body);
         const tour = await Tour.findByIdAndUpdate(id, {
             $set: updatedTour,
@@ -39,7 +38,7 @@ export const updateTourById = async (req, res) => {
 };
 export const deleteTourById = async (req, res) => {
     try {
-        const id = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
         const response = await Tour.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
@@ -56,7 +55,11 @@ export const deleteTourById = async (req, res) => {
 };
 export const getSingleTourById = async (req, res) => {
     try {
-        const { id } = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
+        if (!id) {
+            res.status(404).json("No Id Found");
+            return;
+        }
         const tour = await Tour.findById(id);
         if (!tour) {
             res.status(404).json({ success: true, message: "No data found" });
@@ -70,13 +73,13 @@ export const getSingleTourById = async (req, res) => {
     catch (error) {
         res.status(500).json({
             success: false,
-            error: error,
+            error: error.message,
         });
     }
 };
 export const getTourByTitle = async (req, res) => {
     try {
-        const { title } = z.object({ title: z.string() }).parse(req.params);
+        const { title } = req.params;
         if (!title) {
             res.status(404).json("No title Found");
             return;

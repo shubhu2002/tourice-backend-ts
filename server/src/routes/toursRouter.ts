@@ -11,11 +11,11 @@ import {
 
 const router = Router();
 
-router.post("/new", createTour);
+router.post("/create", createTour);
 router.put("/:id", updateTourById);
 router.delete("/:id", deleteTourById);
-router.get("/:id", getSingleTourById);
-router.get("/:title", getTourByTitle);
+router.get("/search/id/:id", getSingleTourById);
+router.get("/search/title/:title", getTourByTitle);
 router.get("/all", getAllTours);
 router.get("/featured", getFeaturedTours);
 

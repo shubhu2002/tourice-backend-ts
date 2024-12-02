@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import z from "zod";
 
 import Tour from "../models/Tours.js";
 import { ToursConstructor, ToursZodSchema } from "../types/index.js";
@@ -26,14 +25,14 @@ export const createTour = async (req: Request, res: Response) => {
 
 export const updateTourById = async (req: Request, res: Response) => {
   try {
-    const id = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
     const updatedTour = ToursZodSchema.parse(req.body);
     const tour = await Tour.findByIdAndUpdate(
       id,
       {
         $set: updatedTour,
       },
-      { new: true },
+      { new: true }
     );
     res.status(200).json({
       success: true,
@@ -49,7 +48,7 @@ export const updateTourById = async (req: Request, res: Response) => {
 
 export const deleteTourById = async (req: Request, res: Response) => {
   try {
-    const id = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
 
     const response = await Tour.findByIdAndDelete(id);
 
@@ -68,7 +67,11 @@ export const deleteTourById = async (req: Request, res: Response) => {
 
 export const getSingleTourById = async (req: Request, res: Response) => {
   try {
-    const { id } = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
+    if (!id) {
+      res.status(404).json("No Id Found");
+      return;
+    }
     const tour = await Tour.findById(id);
     if (!tour) {
       res.status(404).json({ success: true, message: "No data found" });
@@ -81,15 +84,14 @@ export const getSingleTourById = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      error: error,
+      error: error.message,
     });
   }
 };
 
 export const getTourByTitle = async (req: Request, res: Response) => {
   try {
-    const { title } = z.object({ title: z.string() }).parse(req.params);
-
+    const { title } = req.params;
     if (!title) {
       res.status(404).json("No title Found");
       return;

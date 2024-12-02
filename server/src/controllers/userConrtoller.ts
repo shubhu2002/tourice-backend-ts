@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { z } from "zod";
 
 import User from "../models/Users.js";
 import { UserZodSchema, UserConstructor } from "../types/index.js";
@@ -24,14 +23,14 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const updateUserById = async (req: Request, res: Response) => {
   try {
-    const id = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
     const user = UserZodSchema.parse(req.body);
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
         $set: user,
       },
-      { new: true },
+      { new: true }
     );
     res.status(200).json({
       success: true,
@@ -47,7 +46,7 @@ export const updateUserById = async (req: Request, res: Response) => {
 
 export const deleteUserById = async (req: Request, res: Response) => {
   try {
-    const id = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
 
     const response = await User.findByIdAndDelete(id);
 
@@ -65,7 +64,7 @@ export const deleteUserById = async (req: Request, res: Response) => {
 
 export const getUserById = async (req: Request, res: Response) => {
   try {
-    const id = z.object({ id: z.string() }).parse(req.params);
+    const { id } = req.params;
 
     const user = await User.findById(id);
 

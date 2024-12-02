@@ -5,6 +5,7 @@ import cors from "cors";
 import MongooseConnect from "./mongoose/index.js";
 
 import tourRouter from "./routes/toursRouter.js";
+import userRouter from "./routes/usersRouter.js"
 import bookingRouter from "./routes/bookingRouter.js";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/tour", tourRouter);
+app.use("/api/v1/user", userRouter);
 app.use("api/v1/booking", bookingRouter);
 
 app.listen(process.env.PORT || 5000, () => {

@@ -1,4 +1,3 @@
-import { z } from "zod";
 import User from "../models/Users.js";
 import { UserZodSchema } from "../types/index.js";
 export const createUser = async (req, res) => {
@@ -20,7 +19,7 @@ export const createUser = async (req, res) => {
 };
 export const updateUserById = async (req, res) => {
     try {
-        const id = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
         const user = UserZodSchema.parse(req.body);
         const updatedUser = await User.findByIdAndUpdate(id, {
             $set: user,
@@ -39,7 +38,7 @@ export const updateUserById = async (req, res) => {
 };
 export const deleteUserById = async (req, res) => {
     try {
-        const id = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
         const response = await User.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
@@ -55,7 +54,7 @@ export const deleteUserById = async (req, res) => {
 };
 export const getUserById = async (req, res) => {
     try {
-        const id = z.object({ id: z.string() }).parse(req.params);
+        const { id } = req.params;
         const user = await User.findById(id);
         if (!user) {
             res.status(404).json({ sucess: true, message: "No Data Found" });
