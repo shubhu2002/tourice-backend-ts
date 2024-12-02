@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/src/app.js",
+    "start": "node dist/app.js",
     "build": "tsc --project tsconfig.json",
     "dev": "concurrently \"tsc --watch --project tsconfig.json\" \"nodemon dist/app.js\"",
     "format": "prettier --write './src/**/*.{ts,js,json}'"
