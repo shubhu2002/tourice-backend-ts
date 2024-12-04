@@ -6,13 +6,13 @@ export const createUser = async (req, res) => {
         const newUser = new User(user);
         const savedUser = await newUser.save();
         res.status(200).json({
-            success: true,
+            status: true,
             data: savedUser,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }
@@ -25,13 +25,13 @@ export const updateUserById = async (req, res) => {
             $set: user,
         }, { new: true });
         res.status(200).json({
-            success: true,
+            status: true,
             data: updatedUser,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }
@@ -41,13 +41,13 @@ export const deleteUserById = async (req, res) => {
         const { id } = req.params;
         const response = await User.findByIdAndDelete(id);
         res.status(200).json({
-            success: true,
+            status: true,
             data: response,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }
@@ -60,13 +60,13 @@ export const getUserById = async (req, res) => {
             res.status(404).json({ sucess: true, message: "No Data Found" });
         }
         res.status(200).json({
-            success: true,
+            status: true,
             data: user,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }
@@ -78,13 +78,13 @@ export const getAllUsers = async (req, res) => {
             res.status(404).json({ sucess: true, message: "No Data Found" });
         }
         res.status(200).json({
-            success: true,
+            status: true,
             data: users,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }

@@ -10,12 +10,12 @@ export const createUser = async (req: Request, res: Response) => {
     const savedUser = await newUser.save();
 
     res.status(200).json({
-      success: true,
+      status: true,
       data: savedUser as UserConstructor,
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }
@@ -33,12 +33,12 @@ export const updateUserById = async (req: Request, res: Response) => {
       { new: true }
     );
     res.status(200).json({
-      success: true,
+      status: true,
       data: updatedUser as UserConstructor,
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }
@@ -51,12 +51,12 @@ export const deleteUserById = async (req: Request, res: Response) => {
     const response = await User.findByIdAndDelete(id);
 
     res.status(200).json({
-      success: true,
+      status: true,
       data: response,
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }
@@ -72,12 +72,12 @@ export const getUserById = async (req: Request, res: Response) => {
       res.status(404).json({ sucess: true, message: "No Data Found" });
     }
     res.status(200).json({
-      success: true,
+      status: true,
       data: user as UserConstructor,
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }
@@ -90,14 +90,13 @@ export const getAllUsers = async (req: Request, res: Response) => {
       res.status(404).json({ sucess: true, message: "No Data Found" });
     }
     res.status(200).json({
-      success: true,
+      status: true,
       data: users as UserConstructor[],
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }
 };
-

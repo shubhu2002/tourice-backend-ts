@@ -9,12 +9,12 @@ export const createSubscribers = async (req: Request, res: Response) => {
     const savedUser = await newSubscriber.save();
 
     res.status(200).json({
-      success: true,
+      status: true,
       data: savedUser as { email: string },
     });
   } catch (error: any) {
     res.status(500).json({
-      success: false,
+      status: false,
       error: error,
     });
   }

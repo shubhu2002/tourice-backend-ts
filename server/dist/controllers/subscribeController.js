@@ -6,13 +6,13 @@ export const createSubscribers = async (req, res) => {
         const newSubscriber = new Subscribe(subscriber);
         const savedUser = await newSubscriber.save();
         res.status(200).json({
-            success: true,
+            status: true,
             data: savedUser,
         });
     }
     catch (error) {
         res.status(500).json({
-            success: false,
+            status: false,
             error: error,
         });
     }
