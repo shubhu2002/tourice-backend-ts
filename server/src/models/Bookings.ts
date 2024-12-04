@@ -7,7 +7,7 @@ export interface BookingConstrutor extends Document {
   fullName: string;
   guests: number;
   phone: number;
-  date: Date;
+  date: string;
   totalAmount: number;
 }
 
@@ -36,7 +36,7 @@ const bookingSchema = new Schema<BookingConstrutor>(
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     totalAmount: {
@@ -44,7 +44,7 @@ const bookingSchema = new Schema<BookingConstrutor>(
       requried: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model<BookingConstrutor>("Booking", bookingSchema);

@@ -137,15 +137,14 @@ export const getAllTours = async (req: Request, res: Response) => {
 
 export const getFeaturedTours = async (req: Request, res: Response) => {
   try {
-    const tours = await Tour.find({ featured: true });
-
-    if (!tours) {
+    const featuredTours = await Tour.find({ featured: true });
+    if (!featuredTours) {
       res.status(404).json({ success: true, message: "No data found" });
       return;
     }
     res.status(200).json({
       success: true,
-      data: tours as ToursConstructor[],
+      data: featuredTours as ToursConstructor[],
     });
   } catch (error: any) {
     res.status(500).json({

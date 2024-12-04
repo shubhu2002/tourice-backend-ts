@@ -20,6 +20,6 @@ export const BookingZodSchema = z.object({
     fullName: z.string(),
     guests: z.number(),
     phone: z.number(),
-    date: z.date(),
+    date: z.string(),
     totalAmount: z.number(),
 });
