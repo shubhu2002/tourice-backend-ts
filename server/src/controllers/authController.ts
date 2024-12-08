@@ -20,7 +20,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: true,
-      data: data,
+      newUser: data,
     });
   } catch (error: any) {
     res.status(500).json({
