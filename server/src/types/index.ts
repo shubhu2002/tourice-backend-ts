@@ -1,13 +1,15 @@
+import { Types } from "mongoose";
 import { z } from "zod";
 
 export interface UserConstructor {
-  username: string;
+  _id?: Types.ObjectId;
+  username?: string;
   email: string;
   password: string;
 }
 
 export const UserZodSchema = z.object({
-  username: z.string(),
+  username: z.string().optional(),
   email: z.string(),
   password: z.string(),
 });

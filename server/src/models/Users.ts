@@ -1,6 +1,7 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 export interface UserConstructor extends Document {
+  _id: Types.ObjectId;
   username: string;
   email: string;
   password: string;
@@ -10,7 +11,6 @@ const userSchema = new Schema<UserConstructor>(
   {
     username: {
       type: String,
-      required: true,
       unique: true,
     },
     email: {
@@ -23,7 +23,7 @@ const userSchema = new Schema<UserConstructor>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model<UserConstructor>("User", userSchema);

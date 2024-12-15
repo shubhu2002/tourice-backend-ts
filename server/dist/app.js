@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import MongooseConnect from "./mongoose/index.js";
 import tourRouter from "./routes/toursRouter.js";
 import userRouter from "./routes/usersRouter.js";
@@ -11,6 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.get("/", (req, res) => {
     res.send("Welcome to the tourice server !!");
 });

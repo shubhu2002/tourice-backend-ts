@@ -1,11 +1,12 @@
-// import jwt from "jsonwebtoken";
 import User from "../models/Users.js";
-import { GenerateHashPassword } from "../utils/hashPassword.js";
+import { CheckPassword, GenerateHashPassword } from "../utils/hashPassword.js";
 import { UserZodSchema } from "../types/index.js";
+import { GenerateJWT } from "../utils/jwt.js";
 // registeration
 export const registerUser = async (req, res) => {
     try {
         const user = UserZodSchema.parse(req.body);
+        console.log("user", user);
         const hashedPassword = await GenerateHashPassword(user.password);
         const newUser = new User({
             username: user.username,
@@ -26,36 +27,46 @@ export const registerUser = async (req, res) => {
     }
 };
 // login
-// export const login = async (req, res) => {
-//     const email = req.body.email;
-//     const pass = req.body.password;
-//     try {
-//         const user = await User.findOne({ email });
-//         if (!user) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "User not Found"
-//             })
-//         }
-//         const checkPassword = await bcrypt.compare(pass, user.password);
-//         if (!checkPassword) {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: "Incorrect Email or Password"
-//             })
-//         }
-//         const { password, role, ...rest } = user._doc;
-//         // create jwt token
-//         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET_KEY, { expiresIn: "15d" })
-//         // set token in browser cookies and send response to client
-//         res.cookie('accessToken',token,{
-//             httpOnly:true,
-//             expires:token.expiresIn
-//         }).status(200).json({token,data:{...rest},role})
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Failed To login"
-//         })
-//     }
-// };
+export const loginUser = async (req, res) => {
+    try {
+        const user = UserZodSchema.parse(req.body);
+        const validUser = await User.findOne({ email: user.email });
+        if (!validUser) {
+            res.status(404).json({
+                status: false,
+                message: "User not Found",
+            });
+            return;
+        }
+        const checkPassword = await CheckPassword(user.password, validUser.password);
+        if (!checkPassword) {
+            res.status(401).json({
+                status: false,
+                message: "Incorrect Password",
+            });
+            return;
+        }
+        const isAdmin = user.email === process.env.ADMIN_EMAIL;
+        const token = GenerateJWT(validUser._id, validUser.email, isAdmin);
+        res
+            .cookie("accessToken", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 3 * 24 * 60 * 60 * 1000,
+        })
+            .status(200)
+            .json({
+            status: true,
+            message: "Valid User",
+            token,
+            isAdmin,
+            data: validUser,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            status: false,
+            error: error,
+        });
+    }
+};
