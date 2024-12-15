@@ -59,7 +59,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const isAdmin = user.email === process.env.ADMIN_EMAIL;
 
     const token = GenerateJWT(validUser._id, validUser.email, isAdmin);
-    
+
     res
       .cookie("accessToken", token, {
         httpOnly: true,
@@ -69,10 +69,11 @@ export const loginUser = async (req: Request, res: Response) => {
       .status(200)
       .json({
         status: true,
-        message: "Valid User",
         token,
         isAdmin,
-        data: validUser,
+        id: validUser._id,
+        email: validUser.email,
+        username: validUser.username,
       });
   } catch (error: any) {
     res.status(500).json({
