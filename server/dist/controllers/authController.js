@@ -57,10 +57,11 @@ export const loginUser = async (req, res) => {
             .status(200)
             .json({
             status: true,
-            message: "Valid User",
             token,
             isAdmin,
-            data: validUser,
+            id: validUser._id,
+            email: validUser.email,
+            username: validUser.username,
         });
     }
     catch (error) {
