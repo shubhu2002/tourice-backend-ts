@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import Subscribe from "../models/Subscribe.js";
 import z from "zod";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-export const createSubscribers = async (req: Request, res: Response) => {
-  try {
+export const createSubscribers = asyncHandler(
+  async (req: Request, res: Response) => {
     const subscriber = z.object({ email: z.string() }).parse(req.body);
     const newSubscriber = new Subscribe(subscriber);
     const savedUser = await newSubscriber.save();
@@ -12,10 +13,5 @@ export const createSubscribers = async (req: Request, res: Response) => {
       status: true,
       data: savedUser as { email: string },
     });
-  } catch (error: any) {
-    res.status(500).json({
-      status: false,
-      error: error,
-    });
-  }
-};
+  },
+);
