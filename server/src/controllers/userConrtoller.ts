@@ -30,7 +30,7 @@ export const updateUserById = async (req: Request, res: Response) => {
       {
         $set: user,
       },
-      { new: true }
+      { new: true },
     );
     res.status(200).json({
       status: true,

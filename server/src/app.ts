@@ -15,8 +15,26 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173", // Vite
+  "http://localhost:3000", // Next.js/React
+  process.env.FRONTEND_URL, // Production frontend
+];
+
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {

@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.JWT_SECRET || "your-secret-key";
 export const GenerateJWT = (
   userId: Types.ObjectId,
   email: string,
-  isAdmin: boolean
+  isAdmin: boolean,
 ) => {
   const token = jwt.sign({ userId, email, isAdmin }, SECRET_KEY, {
     expiresIn: "3d",

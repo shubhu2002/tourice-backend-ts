@@ -44,7 +44,7 @@ const bookingSchema = new Schema<BookingConstrutor>(
       requried: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<BookingConstrutor>("Booking", bookingSchema);

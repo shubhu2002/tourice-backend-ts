@@ -23,7 +23,7 @@ const userSchema = new Schema<UserConstructor>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<UserConstructor>("User", userSchema);

@@ -46,7 +46,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
     const checkPassword = await CheckPassword(
       user.password,
-      validUser.password
+      validUser.password,
     );
 
     if (!checkPassword) {

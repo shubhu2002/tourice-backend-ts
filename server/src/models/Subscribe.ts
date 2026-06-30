@@ -12,7 +12,7 @@ const subscribeSchema: Schema = new Schema<SubscribeConstructor>(
       unique: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default model<SubscribeConstructor>("Subscribe", subscribeSchema);

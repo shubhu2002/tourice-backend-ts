@@ -32,7 +32,7 @@ export const updateTourById = async (req: Request, res: Response) => {
       {
         $set: updatedTour,
       },
-      { new: true }
+      { new: true },
     );
     res.status(200).json({
       status: true,
