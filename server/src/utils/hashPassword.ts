@@ -1,4 +1,4 @@
-import { compare, genSaltSync, hashSync } from "bcrypt";
+import { compare, genSaltSync, hashSync } from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const GenerateHashPassword = async (

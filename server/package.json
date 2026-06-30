@@ -8,13 +8,14 @@
     "start": "node dist/app.js",
     "build": "tsc --project tsconfig.json",
     "dev": "concurrently \"tsc --watch --project tsconfig.json\" \"nodemon dist/app.js\"",
-    "format": "prettier --write './src/**/*.{ts,js,json}'"
+    "format": "prettier --write './src/**/*.{ts,js,json}'",
+	"typescript":"npx tsc --noEmit"
   },
   "author": "Shubhanshu Saxena",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.7.8",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -25,7 +26,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
